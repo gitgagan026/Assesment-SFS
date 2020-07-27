@@ -1,0 +1,43 @@
+<aura:component controller="SFSJsonCallOut" implements="flexipage:availableForAllPageTypes" access="global" >
+	<aura:attribute name="ListResults" type="object"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="selectedRecords" type="object"/>
+    <aura:attribute name="selectedKeys" type="String[]"/>
+    <aura:attribute name="initialCount" type="Integer"/>
+    <aura:attribute name="sumBalance" type="decimal" default="0.00"/>
+    <aura:attribute name="selBalance" type="decimal" default="0.00"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="slds-box slds-theme_default">
+    	<lightning:datatable data="{! v.ListResults }" 
+                             columns="{! v.mycolumns }" 
+                             keyField="id"
+                             onrowselection="{!c.handleSelect}"/>
+    </div>
+    <div class="slds-grid slds-wrap slds-grid--pull-padded slds-p-bottom_medium slds-p-top_medium slds-p-left_medium">
+        <div class="slds-col--padded slds-large-size--1-of-12">
+            <lightning:button label="Add" onclick="{!c.addRow}" variant="brand"/>
+        </div>
+        <div class="slds-col--padded slds-large-size--2-of-12">
+            <lightning:button label="Remove" onclick="{!c.removeRow}" variant="brand" disabled="{!v.selectedKeys.length==0}"/>
+        </div>
+    </div>
+    <div class="slds-grid slds-wrap slds-grid--pull-padded slds-p-top_medium slds-p-left_medium" style="background: #CAF2F0;">
+        <div class="slds-col--padded slds-large-size--7-of-12">
+            <b>Total</b>
+        </div>
+        <div class="slds-col--padded slds-large-size--8-of-12">
+            ${!v.sumBalance}
+        </div>
+    </div>
+    
+    <div class="slds-grid slds-wrap slds-grid--pull-padded slds-p-top_medium slds-p-left_medium">
+        <div class="slds-col--padded slds-large-size--3-of-12">
+            <b>Total Row Count: {!v.ListResults.length}</b>
+        </div>
+        <div class="slds-col--padded slds-large-size--4-of-12">
+			<b>Check Row Count: {!v.selectedRecords.length}</b>
+        </div>
+    </div>
+    
+</aura:component>
